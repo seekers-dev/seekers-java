@@ -1,6 +1,8 @@
 /*/
-!src
-config.ini
+!seekers-server
+!seekers-core
+!seekers-graphics
+./config.ini
 
 # Compiled class file
 *.class

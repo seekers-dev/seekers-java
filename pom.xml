@@ -1,23 +1,37 @@
+<!--
+  ~ Copyright (C) 2022  Seekers Contributors
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.seekers</groupId>
-    <artifactId>seekers-server</artifactId>
-
-    <name>Seekers Server</name>
-    <description>Server for the seekers game.</description>
-    <inceptionYear>2022</inceptionYear>
+    <artifactId>seekers</artifactId>
     <version>0.1.0</version>
+    <packaging>pom</packaging>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.mainClass>org.seekers.Launcher</project.mainClass>
-        <project.javaVersion>11</project.javaVersion>
-        <maven.compiler.source>${project.javaVersion}</maven.compiler.source>
-        <maven.compiler.target>${project.javaVersion}</maven.compiler.target>
-        <maven.compiler.release>${project.javaVersion}</maven.compiler.release>
-    </properties>
+    <modules>
+        <module>seekers-server</module>
+        <module>seekers-core</module>
+        <module>seekers-graphics</module>
+    </modules>
+
+    <name>Seekers</name>
+    <inceptionYear>2022</inceptionYear>
 
     <licenses>
         <license>
@@ -26,77 +40,23 @@
         </license>
     </licenses>
 
-    <contributors>
-        <contributor>
-            <name>Karl Zschiebsch</name>
-        </contributor>
-        <contributor>
-            <name>Jonas Endter</name>
-        </contributor>
-        <contributor>
-            <name>Martin Wille</name>
-        </contributor>
-    </contributors>
-
-    <repositories>
-        <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/seekers-dev/seekers-grpc</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <!-- Use JitPack for snapshot builds only -->
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
-        <!-- Graphics -->
         <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>19</version>
-        </dependency>
-        <!-- API -->
-        <dependency>
-            <groupId>org.seekers</groupId>
-            <artifactId>seekers-grpc</artifactId>
-            <version>0.1.1</version>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.2</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.ini4j</groupId>
             <artifactId>ini4j</artifactId>
             <version>0.5.4</version>
-        </dependency>
-        <!-- Annotations -->
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>annotations-api</artifactId>
-            <version>6.0.53</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- Logging -->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.5.6</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.11.0</version>
         </dependency>
         <!-- Test frameworks -->
         <dependency>
@@ -106,93 +66,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <!-- Create uber jar -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.3</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <shadedArtifactAttached>true</shadedArtifactAttached>
-                            <shadedClassifierName>uber</shadedClassifierName>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.1</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>${project.mainClass}</mainClass>
-                            <packageName>seekers</packageName>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-
-            <!-- Wrap into exe file -->
-            <plugin>
-                <groupId>com.akathist.maven.plugins.launch4j</groupId>
-                <artifactId>launch4j-maven-plugin</artifactId>
-                <version>2.5.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>launch4j</goal>
-                        </goals>
-                        <configuration>
-                            <headerType>gui</headerType>
-                            <jar>${project.build.directory}/${project.artifactId}-${project.version}-uber.jar</jar>
-                            <outfile>${project.build.directory}/${project.artifactId}.exe</outfile>
-                            <downloadUrl>http://java.com/download</downloadUrl>
-                            <classPath>
-                                <mainClass>${project.mainClass}</mainClass>
-                                <preCp>anything</preCp>
-                            </classPath>
-                            <jre>
-                                <path>${java.home}</path>
-                                <minVersion>${project.javaVersion}</minVersion>
-                            </jre>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Wrapper for Apache Maven -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-wrapper-plugin</artifactId>
-                <version>3.3.1</version>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.2.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <executable>${project.build.directory}/${project.artifactId}.exe</executable>
-                    <mainClass>${project.mainClass}</mainClass>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>
