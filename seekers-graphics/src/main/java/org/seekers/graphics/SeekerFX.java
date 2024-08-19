@@ -20,6 +20,7 @@ package org.seekers.graphics;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import org.apiguardian.api.API;
 import org.seekers.core.Seeker;
 import org.seekers.core.Vector2D;
 
@@ -27,6 +28,11 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Karl Zschiebsch
+ * @since 0.1.0
+ */
+@API(since = "0.1.0", status = API.Status.EXPERIMENTAL)
 public class SeekerFX extends Seeker {
 
     private final Circle graphic = new Circle(getProperties().getRadius());
@@ -127,6 +133,11 @@ public class SeekerFX extends Seeker {
         return animation;
     }
 
+    /**
+     * @author Karl Zschiebsch
+     * @since 0.1.0
+     */
+    @API(since = "0.1.0", status = API.Status.EXPERIMENTAL)
     public class SeekerAnimation extends Animation {
 
         private final @Nonnull List<Circle> indicators = List.of(

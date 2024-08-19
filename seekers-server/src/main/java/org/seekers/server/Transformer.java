@@ -17,27 +17,37 @@
 
 package org.seekers.server;
 
+import org.apiguardian.api.API;
+
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 /**
  * Every corresponding instance is associated with another object.
  *
- * @author karlz
+ * @author Karl Zschiebsch
+ * @since 0.1.0
  */
 @FunctionalInterface
+@API(since = "0.1.0", status = API.Status.EXPERIMENTAL)
 public interface Transformer<I, O> {
     /**
      * @return the associated object
      */
-    O transform(I input);
+    @CheckReturnValue
+    @Nonnull
+    O transform(@Nonnull I input);
 
     /**
      * Transforms all corresponding objects into the associated objects.
      *
      * @return the associated objects
      */
-    default Collection<O> transformAll(Collection<? extends I> inputs) {
+    @CheckReturnValue
+    @Nonnull
+    default Collection<O> transformAll(@Nonnull Collection<? extends I> inputs) {
         return inputs.stream().map(this::transform).collect(Collectors.toList());
     }
 }

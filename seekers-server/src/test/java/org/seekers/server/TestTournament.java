@@ -15,19 +15,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.seekers.core;
+package org.seekers.server;
 
-import org.apiguardian.api.API;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-/**
- * Interface for all objects that should be updated during runtime.
- *
- * @author Karl Zschiebsch
- */
-@API(since = "0.1.0", status = API.Status.STABLE)
-public interface Entity {
-    /**
-     * Updates this object.
-     */
-    void update();
+class TestTournament {
+
+    @Test
+    void tournament() {
+        Assertions.assertDoesNotThrow(() -> {
+            Tournament tournament = new Tournament();
+            tournament.matchAll("A", "B", "C");
+            tournament.save();
+        });
+    }
+
+    @Test
+    void name() {
+        Tournament tournament = new Tournament();
+        System.err.println(tournament.getMeta());
+    }
 }

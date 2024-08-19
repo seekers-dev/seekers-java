@@ -23,6 +23,7 @@ import io.grpc.ServerBuilder;
 import io.grpc.Status;
 import io.grpc.StatusException;
 import io.grpc.stub.StreamObserver;
+import org.apiguardian.api.API;
 import org.ini4j.Ini;
 import org.seekers.core.Game;
 import org.seekers.core.Player;
@@ -47,17 +48,18 @@ import java.util.function.Function;
  * functionality for hosting the game, handling client requests, and managing game state. The server uses gRPC for
  * communication with clients.
  *
- * @author karlz
+ * @author Karl Zschiebsch
  * @author Supergecki
  * @see SeekersDriver
+ * @since 0.1.0
  */
+@API(since = "0.1.0", status = API.Status.STABLE)
 public class SeekersServer {
     private static final Logger logger = LoggerFactory.getLogger(SeekersServer.class);
 
     private final @Nonnull Server server; // gRPC server socket
-    private final @Nonnull Tournament tournament;
-    private final @Nonnull Function<Ini, Game> creator;
-    private final @Nonnull Ini config;
+    private final @Nonnull Function<Ini, Game> creator; // Game creator
+    private final @Nonnull Ini config; // Configuration
 
     // Collections
     private final @Nonnull Map<String, Player> players = new HashMap<>();
@@ -72,7 +74,6 @@ public class SeekersServer {
      */
     public SeekersServer(@Nonnull Ini config, @Nonnull Function<Ini, Game> creator) {
         this.server = ServerBuilder.forPort(7777).addService(new SeekersService()).build();
-        this.tournament = new Tournament();
         this.creator = creator;
         this.config = config;
 
@@ -131,11 +132,7 @@ public class SeekersServer {
         game = creator.apply(config);
         game.setOnGameFinished(instance -> {
             for (var driver : drivers) {
-                try {
-                    driver.close();
-                } catch (IOException ex) {
-                    logger.error("Could not close driver", ex);
-                }
+                driver.close();
             }
             try {
                 stop();
@@ -150,7 +147,11 @@ public class SeekersServer {
 
     /**
      * The {@code SeekersService} class handles the game-related gRPC service requests.
+     *
+     * @author Karl Zschiebsch
+     * @since 0.1.0
      */
+    @API(since = "0.1.0", status = API.Status.STABLE)
     protected class SeekersService extends SeekersGrpc.SeekersImplBase {
 
         /**

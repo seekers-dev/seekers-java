@@ -33,11 +33,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.apiguardian.api.API;
 import org.ini4j.Ini;
 import org.seekers.core.*;
 
 import javax.annotation.Nonnull;
 
+/**
+ * @author Karl Zschiebsch
+ * @since 0.1.0
+ */
+@API(since = "0.1.0", status = API.Status.EXPERIMENTAL)
 public class GameFX extends Game {
 
     public static synchronized GameFX create(Ini config) {

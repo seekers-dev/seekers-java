@@ -17,6 +17,7 @@
 
 package org.seekers.core;
 
+import org.apiguardian.api.API;
 import org.ini4j.Ini;
 
 import javax.annotation.Nonnull;
@@ -24,8 +25,9 @@ import javax.annotation.Nonnull;
 /**
  * The Seeker class represents a seeker in the game.
  *
- * @author karlz
+ * @author Karl Zschiebsch
  */
+@API(since = "0.1.0", status = API.Status.STABLE)
 public class Seeker extends Physical<Seeker.Properties> {
 
     private final @Nonnull Player player;

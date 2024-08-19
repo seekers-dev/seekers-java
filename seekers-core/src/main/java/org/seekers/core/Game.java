@@ -31,8 +31,8 @@ import java.util.function.Consumer;
  * and camps interact. It manages the game state, updates the positions of game
  * entities, and provides visual rendering.
  *
- * @author karlz
- * @author joendter
+ * @author Karl Zschiebsch
+ * @author Jonas Endter
  */
 public class Game {
 

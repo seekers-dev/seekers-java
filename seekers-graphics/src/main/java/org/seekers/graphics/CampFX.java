@@ -20,12 +20,17 @@ package org.seekers.graphics;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import org.apiguardian.api.API;
 import org.seekers.core.Camp;
 import org.seekers.core.Vector2D;
 
 import javax.annotation.Nonnull;
 
-
+/**
+ * @author Karl Zschiebsch
+ * @since 0.1.0
+ */
+@API(since = "0.1.0", status = API.Status.EXPERIMENTAL)
 public class CampFX extends Camp {
 
     private final Rectangle graphic = new Rectangle();

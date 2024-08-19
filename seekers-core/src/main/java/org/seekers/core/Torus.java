@@ -17,6 +17,7 @@
 
 package org.seekers.core;
 
+import org.apiguardian.api.API;
 import org.ini4j.Ini;
 
 import javax.annotation.Nonnull;
@@ -25,8 +26,9 @@ import javax.annotation.Nonnull;
  * The TorusMap class provides utility methods for handling positions and
  * distances on a torus-shaped map.
  * 
- * @author karlz
+ * @author Karl Zschiebsch
  */
+@API(status = API.Status.EXPERIMENTAL)
 public class Torus {
 
 	private final Properties properties;

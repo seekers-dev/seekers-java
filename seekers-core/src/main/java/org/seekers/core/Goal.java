@@ -17,6 +17,7 @@
 
 package org.seekers.core;
 
+import org.apiguardian.api.API;
 import org.ini4j.Ini;
 
 import javax.annotation.Nonnull;
@@ -30,6 +31,7 @@ import java.util.List;
  *
  * @author karlz
  */
+@API(status = API.Status.STABLE)
 public class Goal extends Physical<Goal.Properties> {
 
     private @Nullable Camp capture;

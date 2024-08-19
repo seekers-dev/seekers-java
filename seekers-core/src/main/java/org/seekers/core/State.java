@@ -17,6 +17,12 @@
 
 package org.seekers.core;
 
+import org.apiguardian.api.API;
+
+/**
+ * @author Karl Zschiebsch
+ */
+@API(status = API.Status.EXPERIMENTAL)
 public enum State {
     /**
      * Game waits for all players, the state of the game was newly generated.

@@ -17,10 +17,18 @@
 
 package org.seekers.core;
 
+import org.apiguardian.api.API;
+
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.List;
 
+/**
+ *
+ * @param <P> type of the properties
+ * @author Karl Zschiebsch
+ */
+@API(since = "0.1.0", status = API.Status.STABLE)
 public abstract class Physical<P extends Physical.Properties> implements Entity {
 
     private final @Nonnull Game game;

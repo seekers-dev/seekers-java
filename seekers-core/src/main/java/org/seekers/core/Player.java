@@ -17,6 +17,8 @@
 
 package org.seekers.core;
 
+import org.apiguardian.api.API;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
@@ -28,6 +30,7 @@ import java.util.Map;
  * @author karlz
 game.getFront().getChildren().add(this);
  */
+@API(status = API.Status.STABLE)
 public class Player {
 
 	private final @Nonnull Game game;

@@ -17,43 +17,51 @@
 
 package org.seekers.server;
 
+import org.apiguardian.api.API;
 import org.seekers.core.*;
 import org.seekers.grpc.game.*;
 
+import javax.annotation.Nonnull;
+
+/**
+ * @author Karl Zschiebsch
+ * @since 0.1.0
+ */
+@API(since = "0.1.0", status = API.Status.EXPERIMENTAL)
 public class Transformers {
     private Transformers() {
         throw new UnsupportedOperationException();
     }
 
-    public static final Transformer<Vector2D, Vector2DOuterClass.Vector2D> VECTOR2D_TRANSFORMER =
+    public static final @Nonnull Transformer<Vector2D, Vector2DOuterClass.Vector2D> VECTOR2D_TRANSFORMER =
             input -> Vector2DOuterClass.Vector2D.newBuilder().setX(input.getX()).setY(input.getY()).build();
 
-    public static final Transformer<Physical<?>, PhysicalOuterClass.Physical> PHYSICAL_TRANSFORMER =
+    public static final @Nonnull Transformer<Physical<?>, PhysicalOuterClass.Physical> PHYSICAL_TRANSFORMER =
             input -> PhysicalOuterClass.Physical.newBuilder()
                     .setId(input.toString())
                     .setAcceleration(VECTOR2D_TRANSFORMER.transform(input.getAcceleration()))
                     .setVelocity(VECTOR2D_TRANSFORMER.transform(input.getVelocity()))
                     .setPosition(VECTOR2D_TRANSFORMER.transform(input.getPosition())).build();
 
-    public static final Transformer<Goal, GoalOuterClass.Goal> GOAL_TRANSFORMER =
+    public static final @Nonnull Transformer<Goal, GoalOuterClass.Goal> GOAL_TRANSFORMER =
             input -> GoalOuterClass.Goal.newBuilder()
                     .setCampId(input.getCapture() != null ? input.getCapture().toString() : "")
                     .setSuper(PHYSICAL_TRANSFORMER.transform(input)).build();
 
-    public static final Transformer<Seeker, SeekerOuterClass.Seeker> SEEKER_TRANSFORMER =
+    public static final @Nonnull Transformer<Seeker, SeekerOuterClass.Seeker> SEEKER_TRANSFORMER =
             input -> SeekerOuterClass.Seeker.newBuilder()
                     .setSuper(PHYSICAL_TRANSFORMER.transform(input))
                     .setPlayerId(input.getPlayer().toString())
                     .setMagnet(input.getMagnet())
                     .setTarget(VECTOR2D_TRANSFORMER.transform(input.getTarget())).build();
 
-    public static final Transformer<Camp, CampOuterClass.Camp> CAMP_TRANSFORMER =
+    public static final @Nonnull Transformer<Camp, CampOuterClass.Camp> CAMP_TRANSFORMER =
             input -> CampOuterClass.Camp.newBuilder()
                     .setId(input.toString())
                     .setPlayerId(input.getPlayer().toString())
                     .setPosition(VECTOR2D_TRANSFORMER.transform(input.getPosition())).build();
 
-    public static final Transformer<Player, PlayerOuterClass.Player> PLAYER_TRANSFORMER =
+    public static final @Nonnull Transformer<Player, PlayerOuterClass.Player> PLAYER_TRANSFORMER =
             input -> PlayerOuterClass.Player.newBuilder()
                     .setId(input.toString())
                     .setCampId(input.getCamp() != null ? input.getCamp().toString() : "")

@@ -17,13 +17,17 @@
 
 package org.seekers.server;
 
+import org.apiguardian.api.API;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+import javax.annotation.WillClose;
 import java.io.File;
 import java.io.IOException;
 
 /**
+ * A seekers driver runs a script that starts a client for a specified AI file.
  * A seekers client is a local network client that runs a single AI file. It communicates between the AI script file and
  * the seekers' server. It is created by a language loader, which creates different types of clients for different
  * file extensions. After a client is created, it hosts a file, runs the script until the match is finished and finally
@@ -31,12 +35,20 @@ import java.io.IOException;
  *
  * @author karlz
  */
+@API(since = "0.1.0", status = API.Status.EXPERIMENTAL)
 public class SeekersDriver implements AutoCloseable {
-    private static final Logger logger = LoggerFactory.getLogger(SeekersDriver.class);
+    private static final @Nonnull Logger logger = LoggerFactory.getLogger(SeekersDriver.class);
 
-    private final Process process;
+    private final @Nonnull Process process;
 
-    public SeekersDriver(String file, String exec) throws IOException {
+    /**
+     * Creates a
+     *
+     * @param file the name of the file
+     * @param exec the execution command template
+     * @throws IOException if an I/O error occurs
+     */
+    public SeekersDriver(@Nonnull String file, @Nonnull String exec) throws IOException {
         ProcessBuilder builder = new ProcessBuilder(exec.replace("{file}", file).split(" "));
         File log = new File(file + ".log");
         if (!log.exists()) {
@@ -54,10 +66,9 @@ public class SeekersDriver implements AutoCloseable {
 
     /**
      * Closes the hosted file and any related gRPC network resources.
-     *
-     * @throws IOException if it could not close the script
      */
-    public void close() throws IOException {
+    @WillClose
+    public void close() {
         logger.info("Close process");
         process.destroy();
     }

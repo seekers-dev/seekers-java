@@ -18,6 +18,7 @@
 package org.seekers.server;
 
 import com.google.gson.Gson;
+import org.apiguardian.api.API;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,16 +27,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents a Seekers Tournament.
  *
- * @author karlz
+ * @author Karl Zschiebsch
+ * @since 0.1.0
  */
+@API(since = "0.1.0", status = API.Status.EXPERIMENTAL)
 public class Tournament implements Serializable {
 
 	private static final Logger logger = LoggerFactory.getLogger(Tournament.class);
@@ -43,6 +43,8 @@ public class Tournament implements Serializable {
 
 	private final @Nonnull List<List<String>> matches = new LinkedList<>();
 	private final @Nonnull Map<String, List<Integer>> results = new HashMap<>();
+
+	private final Metadata meta = new Metadata();
 
 	public void matchAll(File folder) {
 		String[] files = folder.list((File dir, String name) -> name.startsWith("ai") && !name.endsWith(".log"));
@@ -74,14 +76,23 @@ public class Tournament implements Serializable {
 	}
 
 	public void save() throws IOException {
-		File file = new File("results");
-		if (!file.exists() && !file.mkdir()) {
+		File folder = new File("results");
+		if (!folder.exists() && !folder.mkdir()) {
 			logger.error("Failed to create results folder");
 		}
-		try (FileOutputStream stream = new FileOutputStream("results/" + hashCode() + ".json")) {
+		File file = new File("results/" +  meta + ".json");
+		System.err.println("results/" +  meta + ".json");
+		if (!file.exists() && !file.createNewFile()) {
+			logger.error("Failed to create log file");
+		}
+		try (FileOutputStream stream = new FileOutputStream(file)) {
 			stream.write(gson.toJson(this).getBytes());
 		}
     }
+
+	public Metadata getMeta() {
+		return meta;
+	}
 
 	@Nonnull
 	public List<List<String>> getMatches() {
@@ -91,5 +102,48 @@ public class Tournament implements Serializable {
 	@Nonnull
 	public Map<String, List<Integer>> getResults() {
 		return results;
+	}
+
+	public static class Metadata {
+
+		private final @Nonnull Date date = new Date();
+		private String name = "";
+		private String description = "";
+		private String tournament = "";
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setDescription(String description) {
+			this.description = description;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
+		public void setTournament(String tournament) {
+			this.tournament = tournament;
+		}
+
+		public String getTournament() {
+			return tournament;
+		}
+
+		public Date getDate() {
+			return date;
+		}
+
+		@Override
+		public String toString() {
+			return (getName().isBlank() ? "" : getName() + "-")
+					+ (getTournament().isBlank() ? "" : getTournament() + "-")
+					+ String.format("%1$tY-%1$tm-%1td %1$tT", getDate());
+		}
 	}
 }

@@ -21,12 +21,18 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import org.apiguardian.api.API;
 import org.seekers.core.Camp;
 import org.seekers.core.Player;
 import org.seekers.core.Seeker;
 
 import javax.annotation.Nonnull;
 
+/**
+ * @author Karl Zschiebsch
+ * @since 0.1.0
+ */
+@API(since = "0.1.0", status = API.Status.EXPERIMENTAL)
 public class PlayerFX extends Player {
     private final Label graphics = new Label();
 

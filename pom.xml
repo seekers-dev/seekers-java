@@ -31,7 +31,13 @@
     </modules>
 
     <name>Seekers</name>
+    <description>Java implementation of the seekers game</description>
     <inceptionYear>2022</inceptionYear>
+
+    <scm>
+        <url>scm:git:https://github.com/seekers-dev/seekers-java</url>
+        <connection>scm:git:https://github.com/seekers-dev/seekers-java.git</connection>
+    </scm>
 
     <licenses>
         <license>
@@ -40,19 +46,46 @@
         </license>
     </licenses>
 
+    <contributors>
+        <contributor>
+            <name>Karl Zschiebsch</name>
+            <organization>Seekers Dev</organization>
+            <organizationUrl>https://github.com/seekers-dev</organizationUrl>
+        </contributor>
+        <contributor>
+            <name>Jonas Endter</name>
+            <organization>Seekers Dev</organization>
+            <organizationUrl>https://github.com/seekers-dev</organizationUrl>
+        </contributor>
+        <contributor>
+            <name>Martin Wille</name>
+            <organization>Seekers Dev</organization>
+            <organizationUrl>https://github.com/seekers-dev</organizationUrl>
+        </contributor>
+    </contributors>
+
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <project.javaVersion>11</project.javaVersion>
+        <maven.compiler.source>${project.javaVersion}</maven.compiler.source>
+        <maven.compiler.target>${project.javaVersion}</maven.compiler.target>
+        <maven.compiler.release>${project.javaVersion}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
+        <!-- Annotations -->
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
             <version>3.0.2</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apiguardian</groupId>
+            <artifactId>apiguardian-api</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <!-- Ini files -->
         <dependency>
             <groupId>org.ini4j</groupId>
             <artifactId>ini4j</artifactId>
@@ -66,4 +99,15 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Wrapper for Apache Maven -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-wrapper-plugin</artifactId>
+                <version>3.3.1</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>

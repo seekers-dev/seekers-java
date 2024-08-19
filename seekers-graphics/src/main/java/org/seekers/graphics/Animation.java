@@ -18,6 +18,7 @@
 package org.seekers.graphics;
 
 import javafx.scene.layout.Pane;
+import org.apiguardian.api.API;
 import org.seekers.core.Entity;
 
 import javax.annotation.Nonnull;
@@ -25,8 +26,10 @@ import javax.annotation.Nonnull;
 /**
  * Base class for all animations.
  *
- * @author karlz
+ * @author Karl Zschiebsch
+ * @since 0.1.0
  */
+@API(since = "0.1.0", status = API.Status.STABLE)
 public abstract class Animation extends Pane implements Entity {
 
 	private final @Nonnull GameFX game;

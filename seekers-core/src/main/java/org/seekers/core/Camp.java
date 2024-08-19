@@ -17,6 +17,7 @@
 
 package org.seekers.core;
 
+import org.apiguardian.api.API;
 import org.ini4j.Ini;
 
 import javax.annotation.Nonnull;
@@ -25,8 +26,9 @@ import javax.annotation.Nonnull;
  * The Camp class represents a camp in the game. It is associated with a
  * specific player and has a shape of a rectangle.
  *
- * @author karlz
+ * @author Karl Zschiebsch
  */
+@API(since = "0.1.0", status = API.Status.STABLE)
 public class Camp {
 
     private final @Nonnull Player player;
