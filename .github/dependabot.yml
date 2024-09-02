@@ -15,6 +15,7 @@ updates:
     directories: # Location of package manifests
       - "/"
       - "/seekers-*"
+    registries: "*"
     schedule:
       interval: "weekly"
     assignees:
