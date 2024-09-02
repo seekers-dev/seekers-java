@@ -4,8 +4,18 @@
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 version: 2
+registries:
+  maven-artifactory:
+    type: maven-repository
+    url: https://maven.pkg.github.com/seekers-dev/seekers-grpc
+    username: ${{ secrets.USERNAME }}
+    password: ${{ github.token }}
 updates:
   - package-ecosystem: "maven" # See documentation for possible values
-    directory: "/" # Location of package manifests
+    directories: # Location of package manifests
+      - "/"
+      - "/seekers-*"
     schedule:
       interval: "weekly"
+    assignees:
+      - "Kiyotoko"
