@@ -25,8 +25,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>seekers-server</module>
         <module>seekers-core</module>
+        <module>seekers-server</module>
+        <module>seekers-client</module>
         <module>seekers-graphics</module>
     </modules>
 
@@ -39,6 +40,11 @@
         <connection>scm:git:https://github.com/seekers-dev/seekers-java.git</connection>
     </scm>
 
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>http://github.com/seekers-dev/seekers-java/issues</url>
+    </issueManagement>
+
     <licenses>
         <license>
             <name>GNU General Public License</name>
@@ -46,12 +52,16 @@
         </license>
     </licenses>
 
-    <contributors>
-        <contributor>
+    <developers>
+        <developer>
             <name>Karl Zschiebsch</name>
             <organization>Seekers Dev</organization>
             <organizationUrl>https://github.com/seekers-dev</organizationUrl>
-        </contributor>
+            <email>kiyotoko.github@gmail.com</email>
+        </developer>
+    </developers>
+
+    <contributors>
         <contributor>
             <name>Jonas Endter</name>
             <organization>Seekers Dev</organization>
