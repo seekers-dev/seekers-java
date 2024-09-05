@@ -1,5 +1,9 @@
 package org.seekers.client;
 
+import org.seekers.core.*;
+
+import java.util.List;
+
 public interface SeekersImpl {
-    Collection<Seeker> decide(String id, List<Seeker> seekers, List<Camp> camps, List<Player players);
+    Iterable<Seeker> decide(String id, List<Seeker> seekers, List<Goal> goals, List<Player> players, List<Camp> camps, Torus world);
 }
