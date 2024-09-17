@@ -15,32 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.seekers.core;
+package org.seekers.tests;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import javafx.application.Application;
 
-class TestRange {
+public class Launcher {
 
-    @Test
-    void from0To4() {
-        var array = new int[5];
-        var pos = 0;
-        for (int i = 0; i < 5; ) {
-            array[pos++] = i++;
-        }
-
-        Assertions.assertArrayEquals(new int[] {0, 1, 2, 3, 4}, array);
-    }
-
-    @Test
-    void from1To5() {
-        var array = new int[5];
-        var pos = 0;
-        for (int i = 0; i < 5; ) {
-            array[pos++] = ++i;
-        }
-
-        Assertions.assertArrayEquals(new int[] {1, 2, 3, 4, 5}, array);
+    public static void main(String[] args) {
+        Application.launch(App.class, args);
     }
 }

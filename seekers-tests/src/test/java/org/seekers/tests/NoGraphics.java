@@ -15,25 +15,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.seekers.server;
+package org.seekers.tests;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.ini4j.Ini;
+import org.seekers.core.Game;
+import org.seekers.server.SeekersServer;
 
-class TestTournament {
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
-    @Test
-    void tournament() {
-        Assertions.assertDoesNotThrow(() -> {
-            Tournament tournament = new Tournament();
-            tournament.matchAll("A", "B", "C");
-            tournament.save();
-        });
-    }
+public class NoGraphics {
 
-    @Test
-    void name() {
-        Tournament tournament = new Tournament();
-        System.err.println(tournament.getMeta());
+    public static void main(String[] args) throws IOException {
+        Ini config = new Ini(new File("config.ini"));
+        SeekersServer server = new SeekersServer(config, Game::create);
+
+        server.start();
+        server.playMatch(List.of("players/ai-undefined.py", "players/ai-tutorial.py"));
+
     }
 }

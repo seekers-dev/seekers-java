@@ -60,6 +60,7 @@ public class SeekersDriver implements AutoCloseable {
         }
         builder.redirectError(log);
         builder.redirectOutput(log);
+        System.out.printf("Dir: %s, File: %s %n", builder.directory(), file);
         logger.info("Start driver process");
         process = builder.start();
     }

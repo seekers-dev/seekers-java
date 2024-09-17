@@ -1,0 +1,37 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>seekers-tests</artifactId>
+
+    <name>Tests</name>
+    <description>Testing all other modules.</description>
+
+    <parent>
+        <groupId>org.seekers</groupId>
+        <artifactId>seekers</artifactId>
+        <version>0.1.0</version>
+    </parent>
+
+    <dependencies>
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.seekers</groupId>
+            <artifactId>seekers-graphics</artifactId>
+            <version>0.1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seekers</groupId>
+            <artifactId>seekers-server</artifactId>
+            <version>0.1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seekers</groupId>
+            <artifactId>seekers-client</artifactId>
+            <version>0.1.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

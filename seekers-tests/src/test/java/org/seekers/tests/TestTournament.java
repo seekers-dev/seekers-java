@@ -15,24 +15,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.seekers.server;
+package org.seekers.tests;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-import org.ini4j.Ini;
-import org.seekers.graphics.GameFX;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.seekers.server.Tournament;
 
-import java.io.File;
-import java.util.List;
+class TestTournament {
 
-public class App extends Application {
+    @Test
+    void tournament() {
+        Assertions.assertDoesNotThrow(() -> {
+            Tournament tournament = new Tournament();
+            tournament.matchAll("A", "B", "C");
+            tournament.save();
+        });
+    }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        Ini config = new Ini(new File("config.ini"));
-        SeekersServer server = new SeekersServer(config, GameFX::create);
-
-        server.start();
-        server.playMatch(List.of("players/ai-undefined.py", "players/ai-tutorial.py"));
+    @Test
+    void name() {
+        Tournament tournament = new Tournament();
+        System.err.println(tournament.getMeta());
     }
 }

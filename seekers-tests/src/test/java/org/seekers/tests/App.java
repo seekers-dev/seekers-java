@@ -15,23 +15,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.seekers.server;
+package org.seekers.tests;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
 import org.ini4j.Ini;
-import org.seekers.core.Game;
+import org.seekers.graphics.GameFX;
+import org.seekers.server.SeekersServer;
+import org.seekers.server.Tournament;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-public class NoGraphics {
+public class App extends Application {
 
-    public static void main(String[] args) throws IOException {
+    @Override
+    public void start(Stage primaryStage) throws Exception {
         Ini config = new Ini(new File("config.ini"));
-        SeekersServer server = new SeekersServer(config, Game::create);
+        SeekersServer server = new SeekersServer(config, GameFX::create);
 
         server.start();
-        server.playMatch(List.of("players/ai-undefined.py", "players/ai-tutorial.py"));
 
+        Tournament tournament = new Tournament();
+        tournament.matchAll(new File("players"));
+        server.playMatch(tournament.getMatches().get(0));
+
+        // server.playMatch(List.of("players/ai-undefined.py", "players/ai-tutorial.py"));
     }
 }
