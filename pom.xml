@@ -85,13 +85,6 @@
             <artifactId>ini4j</artifactId>
             <version>0.5.4</version>
         </dependency>
-        <!-- Test frameworks -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.11.0</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
