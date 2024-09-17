@@ -72,6 +72,7 @@ public class SeekersServer {
      *
      * @param config  the config
      */
+    @API(since = "0.1.0", status = API.Status.EXPERIMENTAL)
     public SeekersServer(@Nonnull Ini config, @Nonnull Function<Ini, Game> creator) {
         this.server = ServerBuilder.forPort(7777).addService(new SeekersService()).build();
         this.creator = creator;
@@ -124,7 +125,7 @@ public class SeekersServer {
      *
      * @param file the name of the file
      */
-    private void findDriver(String file) throws IOException {
+    private void findDriver(String file) {
         for (var entry : commands.entrySet()) {
             if (file.endsWith(entry.getKey())) {
                 drivers.add(new SeekersDriver(file, entry.getValue()));
@@ -134,7 +135,7 @@ public class SeekersServer {
         logger.warn("Could not find loader for file {}", file);
     }
 
-    public void playMatch(List<String> match) throws IOException {
+    public void playMatch(List<String> match) {
         game = creator.apply(config);
         game.setOnGameFinished(instance -> {
             for (var driver : drivers) {

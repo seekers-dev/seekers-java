@@ -20,10 +20,11 @@ package org.seekers.tests;
 import org.ini4j.Ini;
 import org.seekers.core.Game;
 import org.seekers.server.SeekersServer;
+import org.seekers.server.Tournament;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.nio.file.Path;
 
 public class NoGraphics {
 
@@ -32,7 +33,9 @@ public class NoGraphics {
         SeekersServer server = new SeekersServer(config, Game::create);
 
         server.start();
-        server.playMatch(List.of("players/ai-undefined.py", "players/ai-tutorial.py"));
 
+        Tournament tournament = new Tournament();
+        tournament.matchAll(Path.of("external", "players").toFile());
+        server.playMatch(tournament.getMatches().get(0));
     }
 }

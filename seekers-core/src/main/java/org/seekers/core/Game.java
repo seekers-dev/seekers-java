@@ -108,11 +108,11 @@ public class Game {
         private final double tickDuration;
 
         public Properties(int playtime, int players, int seekers, int goals, double tickDuration) {
-            this.playtime = playtime;
-            this.players = players;
-            this.seekers = seekers;
-            this.goals = goals;
-            this.tickDuration = tickDuration;
+            this.playtime = Util.checkNotNegative(playtime);
+            this.players = Util.checkPositive(players);
+            this.seekers = Util.checkPositive(seekers);
+            this.goals = Util.checkPositive(goals);
+            this.tickDuration = Util.checkPositive(tickDuration);
         }
 
         public int getPlaytime() {
@@ -150,7 +150,6 @@ public class Game {
         Thread clock = new Thread() {
             @Override
             public void run() {
-               System.err.println("Started game");
                 while (getPassedPlaytime() < getProperties().getPlaytime()) {
                     synchronized (this) {
                         updateAll();
@@ -164,7 +163,9 @@ public class Game {
                 }
             }
         };
-        setOnGameFinished(e -> clock.setName("Seekers-Game (core impl)"));
+        clock.setName("Seekers-Game (core impl)");
+        clock.start();
+        setOnGameFinished(e -> clock.interrupt());
     }
 
     /**

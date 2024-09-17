@@ -25,7 +25,7 @@ import org.seekers.server.SeekersServer;
 import org.seekers.server.Tournament;
 
 import java.io.File;
-import java.util.List;
+import java.nio.file.Path;
 
 public class App extends Application {
 
@@ -37,7 +37,7 @@ public class App extends Application {
         server.start();
 
         Tournament tournament = new Tournament();
-        tournament.matchAll(new File("players"));
+        tournament.matchAll(Path.of("external", "players").toFile());
         server.playMatch(tournament.getMatches().get(0));
 
         // server.playMatch(List.of("players/ai-undefined.py", "players/ai-tutorial.py"));

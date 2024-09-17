@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.WillClose;
 import java.io.File;
 import java.io.IOException;
@@ -39,30 +40,48 @@ import java.io.IOException;
 public class SeekersDriver implements AutoCloseable {
     private static final @Nonnull Logger logger = LoggerFactory.getLogger(SeekersDriver.class);
 
-    private final @Nonnull Process process;
+    private final @Nullable Process process;
 
     /**
      * Creates a
      *
      * @param file the name of the file
      * @param exec the execution command template
-     * @throws IOException if an I/O error occurs
      */
-    public SeekersDriver(@Nonnull String file, @Nonnull String exec) throws IOException {
+    public SeekersDriver(@Nonnull String file, @Nonnull String exec) {
+        if (!exec.contains("{file}")) throw new IllegalArgumentException(
+                "Execution template should contain a reference to the executed file");
         ProcessBuilder builder = new ProcessBuilder(exec.replace("{file}", file).split(" "));
+
+        logger.debug("Redirect output to log file");
         File log = new File(file + ".log");
         if (!log.exists()) {
-             if (log.createNewFile()) {
-                 logger.debug("Logfile was created");
-             } else if (!log.exists()) {
-                 logger.error("Could not create log file for file {}!", file);
-             }
+            try {
+                if (!log.getParentFile().exists()) {
+                    logger.warn("Parent folder is missing, this may be an error");
+                    if (log.getParentFile().mkdirs())
+                        logger.error("Could not create parent folder for file {}!", file);
+                }
+                if (log.createNewFile()) {
+                    logger.debug("Logfile was created");
+                } else if (!log.exists()) {
+                    logger.error("Could not create log file for file {}!", file);
+                }
+            } catch (IOException e) {
+                logger.error("Creation failed for an unknown reason, please check the logs above", e);
+            }
         }
         builder.redirectError(log);
         builder.redirectOutput(log);
-        System.out.printf("Dir: %s, File: %s %n", builder.directory(), file);
-        logger.info("Start driver process");
-        process = builder.start();
+
+        logger.debug("Start driver process");
+        Process process = null;
+        try {
+            process = builder.start();
+        } catch (IOException e) {
+            logger.error("Could not start process", e);
+        }
+        this.process = process;
     }
 
     /**
@@ -71,6 +90,10 @@ public class SeekersDriver implements AutoCloseable {
     @WillClose
     public void close() {
         logger.info("Close process");
-        process.destroy();
+        if (process != null) {
+            if (process.exitValue() != 0)
+                logger.warn("Process finished with exit code {}", process.exitValue());
+            process.destroy();
+        }
     }
 }
