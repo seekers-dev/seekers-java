@@ -83,13 +83,14 @@ public class SeekersServer {
         var section = config.get("drivers");
         if (section != null) {
             for (var entry : section.entrySet()) {
-                var key = entry.getKey().strip();
-                if (entry.getKey().startsWith("(") && entry.getKey().endsWith(")")) {
-                    for (var extension : entry.getKey().substring(1, entry.getKey().length() - 1).split(",")) {
-                        commands.put(extension.strip(), entry.getValue());
+                var key = entry.getKey();
+                var val = entry.getValue();
+                if (key.startsWith("(") && key.endsWith(")")) {
+                    for (var extension : key.substring(1, entry.getKey().length() - 1).split(",")) {
+                        commands.put(extension.strip(), val);
                     }
                 } else {
-                    commands.put(entry.getKey().strip())
+                    commands.put(key, val);
                 }
             }
         }
