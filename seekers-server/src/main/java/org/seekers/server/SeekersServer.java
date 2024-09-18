@@ -212,11 +212,11 @@ public class SeekersServer {
                 try {
                     Player player = game.getPlayers().get(players.size());
                     if (request.hasName() && !request.getName().isBlank()) {
-                        logger.info("Used name {}", request.getName());
+                        logger.debug("Used name {}", request.getName());
                         player.setName(request.getName());
                     }
                     if (request.hasColor() && !request.getColor().isBlank()) {
-                        logger.info("Used color {}", request.getColor());
+                        logger.debug("Used color {}", request.getColor());
                         player.setColor(request.getColor());
                     }
                     String token = Hashing.fingerprint2011().hashString("" + Math.random(),

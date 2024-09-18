@@ -24,14 +24,13 @@ import org.seekers.graphics.GameFX;
 import org.seekers.server.SeekersServer;
 import org.seekers.server.Tournament;
 
-import java.io.File;
 import java.nio.file.Path;
 
 public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Ini config = new Ini(new File("config.ini"));
+        Ini config = GameFX.config();
         SeekersServer server = new SeekersServer(config, GameFX::create);
 
         server.start();

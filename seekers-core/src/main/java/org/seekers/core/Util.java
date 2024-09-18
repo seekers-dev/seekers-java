@@ -22,17 +22,15 @@ final class Util {
         return number;
     }
 
-    private static final String CONFIG_NAME = "config.ini";
+    public static final String CONFIG_NAME = "config.ini";
 
-    public static void copyIfNotExists() {
+    public static void copyIfNotExists() throws IOException {
         File file = new File(CONFIG_NAME);
         if (!file.exists()) {
             try (FileOutputStream output = new FileOutputStream(file);
                  InputStream input = Util.class.getResourceAsStream(CONFIG_NAME)) {
                 if (input == null) throw new FileNotFoundException(CONFIG_NAME);
                 output.write(input.readAllBytes());
-            } catch (IOException e) {
-                throw new InternalError(e);
             }
         }
     }

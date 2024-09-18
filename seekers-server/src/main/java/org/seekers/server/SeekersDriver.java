@@ -26,6 +26,7 @@ import javax.annotation.Nullable;
 import javax.annotation.WillClose;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A seekers driver runs a script that starts a client for a specified AI file.
@@ -78,6 +79,7 @@ public class SeekersDriver implements AutoCloseable {
         Process process = null;
         try {
             process = builder.start();
+            process.onExit().thenAccept(p -> logger.warn("Process finished with exit code {}", p.exitValue()));
         } catch (IOException e) {
             logger.error("Could not start process", e);
         }
@@ -90,10 +92,12 @@ public class SeekersDriver implements AutoCloseable {
     @WillClose
     public void close() {
         logger.info("Close process");
-        if (process != null) {
-            if (process.exitValue() != 0)
-                logger.warn("Process finished with exit code {}", process.exitValue());
-            process.destroy();
+        if (process != null && process.isAlive()) {
+            try {
+                if (!process.waitFor(5, TimeUnit.SECONDS)) process.destroy();
+            } catch (Exception e) {
+                logger.error("Could not close process", e);
+            }
         }
     }
 }

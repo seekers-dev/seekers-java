@@ -22,14 +22,13 @@ import org.seekers.core.Game;
 import org.seekers.server.SeekersServer;
 import org.seekers.server.Tournament;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
 public class NoGraphics {
 
     public static void main(String[] args) throws IOException {
-        Ini config = new Ini(new File("config.ini"));
+        Ini config = Game.config();
         SeekersServer server = new SeekersServer(config, Game::create);
 
         server.start();

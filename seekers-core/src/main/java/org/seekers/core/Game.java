@@ -22,6 +22,8 @@ import org.ini4j.Ini;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -35,6 +37,11 @@ import java.util.function.Consumer;
  * @author Jonas Endter
  */
 public class Game {
+
+    public static Ini config() throws IOException {
+        Util.copyIfNotExists();
+        return new Ini(new File(Util.CONFIG_NAME));
+    }
 
     public static Game create(Ini config) {
         Game game = new Game(Game.Properties.from(config), new Torus(Torus.Properties.from(config)));
@@ -147,6 +154,7 @@ public class Game {
     }
 
     public void play() {
+        setGameState(State.RUNNING);
         Thread clock = new Thread() {
             @Override
             public void run() {
