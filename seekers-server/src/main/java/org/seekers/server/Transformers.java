@@ -19,7 +19,7 @@ package org.seekers.server;
 
 import org.apiguardian.api.API;
 import org.seekers.core.*;
-import org.seekers.grpc.game.*;
+import org.seekers.api.*;
 
 import javax.annotation.Nonnull;
 
@@ -46,11 +46,11 @@ public class Transformers {
     public static final @Nonnull Transformer<Goal, GoalOuterClass.Goal> GOAL_TRANSFORMER =
             input -> GoalOuterClass.Goal.newBuilder()
                     .setCampId(input.getCapture() != null ? input.getCapture().toString() : "")
-                    .setSuper(PHYSICAL_TRANSFORMER.transform(input)).build();
+                    .setPhysical(PHYSICAL_TRANSFORMER.transform(input)).build();
 
     public static final @Nonnull Transformer<Seeker, SeekerOuterClass.Seeker> SEEKER_TRANSFORMER =
             input -> SeekerOuterClass.Seeker.newBuilder()
-                    .setSuper(PHYSICAL_TRANSFORMER.transform(input))
+                    .setPhysical(PHYSICAL_TRANSFORMER.transform(input))
                     .setPlayerId(input.getPlayer().toString())
                     .setMagnet(input.getMagnet())
                     .setTarget(VECTOR2D_TRANSFORMER.transform(input.getTarget())).build();

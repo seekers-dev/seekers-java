@@ -29,7 +29,7 @@ import org.seekers.core.Game;
 import org.seekers.core.Player;
 import org.seekers.core.Seeker;
 import org.seekers.core.Vector2D;
-import org.seekers.grpc.service.*;
+import org.seekers.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

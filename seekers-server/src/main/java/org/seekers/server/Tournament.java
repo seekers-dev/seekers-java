@@ -135,6 +135,7 @@ public class Tournament implements Serializable {
 			return tournament;
 		}
 
+		@Nonnull
 		public Date getDate() {
 			return date;
 		}

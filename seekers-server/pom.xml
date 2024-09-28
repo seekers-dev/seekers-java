@@ -18,7 +18,7 @@
     <repositories>
         <repository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/seekers-dev/seekers-grpc</url>
+            <url>https://maven.pkg.github.com/seekers-dev/seekers-api</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -47,8 +47,8 @@
         </dependency>
         <dependency>
             <groupId>org.seekers</groupId>
-            <artifactId>seekers-grpc</artifactId>
-            <version>0.1.1</version>
+            <artifactId>seekers-api</artifactId>
+            <version>0.1.2</version>
         </dependency>
         <!-- Logging -->
         <dependency>

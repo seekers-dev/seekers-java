@@ -2,10 +2,10 @@ package org.seekers.client;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import org.seekers.grpc.service.Command;
-import org.seekers.grpc.service.CommandRequest;
-import org.seekers.grpc.service.JoinRequest;
-import org.seekers.grpc.service.SeekersGrpc;
+import org.seekers.api.Command;
+import org.seekers.api.CommandRequest;
+import org.seekers.api.JoinRequest;
+import org.seekers.api.SeekersGrpc;
 
 public class SeekersClient {
     private final ManagedChannel channel;
